@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <h2>บันทึกข้อมูล</h2>
-        <form action="" method="post">
+        <form action="{{url_for('insert')}}" method="POST">
             <div class="form-group">
                 <label for="fname">ชื่อ</label>
                 <input type="text" class="form-control" name="fname">
@@ -23,7 +23,7 @@
                 <label for="fname">นามสกุล</label>
                 <input type="text" class="form-control" name="lname">
             </div>
-            <a href="/" class="btn btn-success">Home</a>
+            <a href="/index" class="btn btn-success">Home</a>
             <button type="submit" class="pull-right btn btn-primary">Commit</button>
         </form>
     </div>

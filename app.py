@@ -1,8 +1,6 @@
-from flask import Flask, render_template
-from flask.helpers import url_for
+from flask import Flask, render_template, request, redirect, url_for
 import pymysql.cursors
-from werkzeug.utils import redirect
-from werkzeug.wrappers import request
+
 
 app = Flask(__name__)
 conn = pymysql.connect( host = 'localhost',
@@ -10,7 +8,7 @@ conn = pymysql.connect( host = 'localhost',
                         password = '',
                         database = 'studentdb')
 
-@app.route("/")
+@app.route("/", methods = ['GET'])
 def show():
     with conn:
         cur = conn.cursor()
@@ -20,11 +18,11 @@ def show():
 
 @app.route("/addinfo")
 def add():
-        return render_template('add.html')
+    return render_template('add.html')
 
-@app.route("/insert", method=['POST'])
+@app.route("/insert", methods = ['POST'])
 def insert():
-    if request.method=="POST":
+    if request.method == "POST":
         fname = request.form['fname']
         lname = request.form['lname']
         with conn.cursor() as cursor:
@@ -32,6 +30,7 @@ def insert():
             cursor.execute(sql,(fname, lname))
             conn.commit()
         return redirect(url_for('showData'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
